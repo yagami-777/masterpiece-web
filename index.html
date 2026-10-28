@@ -1,14 +1,451 @@
 <!doctype html>
 <html lang="ja" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>週末重賞マスターピース | 競馬ジークンドー</title>
-    <meta name="description" content="第一原理バイオメトリクス・Mode B運動力学・K=7直交基底による週末重賞クオンツアナリティクス端末" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f59e0b'><path d='M6 9H4.5a2.5 2.5 0 0 1 0-5H6'/><path d='M18 9h1.5a2.5 2.5 0 0 0 0-5H18'/><path d='M4 22h16'/><path d='M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22'/><path d='M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22'/><path d='M18 2H6v7a6 6 0 0 0 12 0V2Z'/></svg>" />
-  </head>
-  <body class="bg-zinc-950 text-zinc-200 antialiased selection:bg-emerald-500/30 selection:text-emerald-300">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>第87回菊花賞（GI） | 週末重賞マスターピース</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            zinc: {
+              950: '#09090b',
+              900: '#18181b',
+              800: '#27272a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #09090b;
+      color: #e4e4e7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-zinc-950 text-zinc-200 antialiased p-3 sm:p-6 pb-20">
+  <div id="app" class="mx-auto max-w-5xl space-y-4">
+    <!-- Header Card -->
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/90 p-4 sm:p-5 shadow-lg">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 text-amber-400">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3h14v2H5V3zm0 4h14v2H5V7zm0 4h14v2H5v-2zm0 4h14v2H5v-2zm0 4h14v2H5v-2z"/></svg>
+            <span class="text-[11px] font-bold tracking-widest uppercase">Masterpiece Analytics Terminal</span>
+          </div>
+          <h1 class="mt-1 text-xl sm:text-2xl font-bold text-zinc-50" id="header-race-name"></h1>
+          <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm text-zinc-400">
+            <span class="inline-flex items-center gap-1" id="header-course"></span>
+            <span class="inline-flex items-center gap-1" id="header-time"></span>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="inline-flex items-center gap-1 rounded-md border border-amber-400/40 bg-amber-500/10 px-2 py-1 text-xs font-semibold text-amber-300" id="badge-condition"></span>
+          <span class="inline-flex items-center gap-1 rounded-md border border-cyan-400/40 bg-cyan-500/10 font-mono px-2 py-1 text-xs font-semibold text-cyan-300" id="badge-cushion"></span>
+        </div>
+      </div>
+      <div class="mt-3 flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-xs">
+        <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span class="shrink-0 font-medium text-emerald-300">Merkle Seal</span>
+        <code class="min-w-0 truncate font-mono text-[11px] text-zinc-400" id="merkle-seal-text"></code>
+      </div>
+    </div>
+
+    <!-- Rheology Card -->
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/90 shadow-md overflow-hidden">
+      <button id="toggle-rheology-btn" class="flex w-full items-center justify-between p-4 text-left hover:bg-zinc-800/40 transition">
+        <span class="flex items-center gap-2 font-semibold text-sm sm:text-base text-zinc-100">
+          <svg class="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          馬場バイオメカニクス ＆ 展開解説
+        </span>
+        <svg id="rheology-arrow" class="h-4 w-4 text-zinc-400 transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      <div id="rheology-body" class="border-t border-zinc-800 p-4 space-y-3">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center" id="rheology-stats"></div>
+        <p class="text-xs sm:text-sm leading-relaxed text-zinc-300" id="rheology-conclusion"></p>
+      </div>
+    </div>
+
+    <!-- Field Section -->
+    <div class="space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+        <h2 class="flex items-center gap-2 text-sm sm:text-base font-semibold text-zinc-200">
+          <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          出走馬 マスターピース・コア一覧
+          <span class="font-mono text-xs text-zinc-400" id="horse-count-badge"></span>
+        </h2>
+        <div class="flex gap-1 rounded-lg border border-zinc-800 bg-zinc-900 p-1" id="sort-buttons">
+          <button data-sort="pred" class="sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300">予測順位</button>
+          <button data-sort="pwin" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">正準勝率</button>
+          <button data-sort="odds" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">単勝オッズ</button>
+          <button data-sort="kelly" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">1/4ケリー</button>
+        </div>
+      </div>
+
+      <!-- Horses Container -->
+      <div class="space-y-2.5" id="horses-list"></div>
+      <p class="text-[11px] text-zinc-400 flex items-center gap-1.5 pt-1">
+        <svg class="h-3.5 w-3.5 text-zinc-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        P_win は正準勝率（p_benter）。馬の行をタップするとK=7レーダーチャートと調教所見が展開します。
+      </p>
+    </div>
+
+    <!-- Portfolio Section -->
+    <div class="pt-4 space-y-3">
+      <h2 class="flex items-center gap-2 text-sm sm:text-base font-semibold text-zinc-200">
+        <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        推奨ポートフォリオ（1/4ケリー資金配分）
+      </h2>
+      <div class="grid gap-3 sm:grid-cols-3" id="portfolio-cards"></div>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/90 p-4">
+        <div class="flex justify-between items-center text-xs mb-3">
+          <span class="text-zinc-400">推奨単勝配分比率（%）</span>
+          <span class="font-mono text-emerald-400 font-bold" id="portfolio-total-kelly"></span>
+        </div>
+        <div class="space-y-2" id="portfolio-bars"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"race_info": {"race_id": "20261025_KYOTO_11R_KIKUKA_SHO_G1", "race_name": "第87回菊花賞（GI）", "grade": "G1", "course": "京都芝3000m（右・外 Aコース）", "distance_m": 3000, "surface": "芝", "post_time": "2026-10-25T15:40:00+09:00", "merkle_seal": "3d6aa5ee07490d7610d1a3e5d9ef41411e4f08fed7552cfcd621aa35032465b4"}, "track_rheology": {"condition": "重", "cushion_value": 9.2, "turf_moisture_goal_pct": 10.2, "turf_moisture_4c_pct": 10.6, "effective_track_delta_t_sec": 1.15, "tactical_conclusion": "日曜朝06:00発表で京都芝は重馬場・クッション値9.2(土曜比-0.3)・含水率G前10.2%/4角10.6%。524kg超の大型高ピッチ馬(ロブチェン等)は土壌沈降散逸W_sink((524/480)^2=1.192倍)＋坂2回重力散逸の二重苦。一方、460〜484kg軽量×長肢大ストライド×道悪巧者血統(#10ダノンヒストリー483kg, #6バステール464kg, #11アスクエジンバラ484kg, #1エムズビギン512kg×Galileo, #15シートゥサミット父モーリス)が絶対優位。"}, "k7_basis_labels": ["f1: 実績・基底能力 (S_base)", "f2: 馬体骨格・四肢長比 (LCR)", "f3: 調教生体・EOM (Workout)", "f4: コース幾何・距離ロス (JCG)", "f5: 神経動機・血統 (SCL)", "f6: 状態負債・蹄機 (ODE)", "f7: スマートマネー (SM_i)"], "horses": [
+      {"bracket": 5, "num": 10, "name": "ダノンヒストリー", "jockey": "C.ルメール", "trainer": "堀宣行 (美浦)", "sire": "エピファネイア", "bms": "Tizway", "prev_wt": 478, "post_workout_wt": 483, "odds_win": 4.4, "s_base": 96.2, "r_fp_lb": 119.2, "derby_room_delta_d_m": 4.2, "lcr": 0.922, "eom": 0.928, "gamma_b": 0.924, "bcs": 0.052, "bcs_color": "Green", "scr_heavy_aptitude": 0.962, "scl": [0.78, 0.96, 0.88], "scl_type": "C-L極大・超長肢無尽蔵クルーズ型", "f_raw": [0.93, 0.95, 0.95, 0.96, 0.97, 0.96, 0.94], "workout_note": "最終美W 67.6-51.6-37.3-11.7(馬なり先着・心肺極上)。父エピファネイア×母コーステッド(母父Tizway・ダノンベルーガ半弟)×483kg軽量黄金馬体(沈降係数1.013)。洋芝・荒れ馬場2600m(阿寒湖特別・函館1勝C)を連勝した重馬場耐退縮SCR=0.962はメンバー最高。", "w_sink_factor": 1.0125, "p_benter": 0.2459, "ev_win": 1.082, "ev_place": 1.251, "kelly_1_4": 0.006, "smart_money_ratio": 0.806, "pred_rank": 1, "mark": "◎"},
+      {"bracket": 4, "num": 8, "name": "ロブチェン", "jockey": "松山弘平", "trainer": "杉山晴紀 (栗東)", "sire": "ワールドプレミア", "bms": "Giant's Causeway", "prev_wt": 518, "post_workout_wt": 524, "odds_win": 1.8, "s_base": 96.5, "r_fp_lb": 120.0, "derby_room_delta_d_m": 13.4, "lcr": 0.878, "eom": 0.895, "gamma_b": 0.902, "bcs": 0.064, "bcs_color": "Green", "scr_heavy_aptitude": 0.875, "scl": [0.85, 0.93, 0.92], "scl_type": "C-L-S三冠王道・高ピッチ制圧型", "f_raw": [0.96, 0.64, 0.94, 0.92, 0.78, 0.91, 0.95], "workout_note": "最終CW 52.5-36.9-11.1(馬なり先着)。父ワールドプレミア×母父Giant's Causeway。重馬場(9.2)の3000mでは524kgの土壌沈降散逸と高ピッチ走法のせん断スリップ損失が重なり単勝1.8倍は危険なロックイン。", "w_sink_factor": 1.1917, "p_benter": 0.2398, "ev_win": 0.432, "ev_place": 0.759, "kelly_1_4": 0.0, "smart_money_ratio": 0.531, "pred_rank": 2, "mark": "◯"},
+      {"bracket": 5, "num": 9, "name": "ゴーイントゥスカイ", "jockey": "武豊", "trainer": "上原佑紀 (美浦)", "sire": "コントレイル", "bms": "Tapit", "prev_wt": 502, "post_workout_wt": 510, "odds_win": 11.8, "s_base": 95.65, "r_fp_lb": 118.2, "derby_room_delta_d_m": 11.8, "lcr": 0.905, "eom": 0.892, "gamma_b": 0.896, "bcs": 0.066, "bcs_color": "Green", "scr_heavy_aptitude": 0.895, "scl": [0.88, 0.91, 0.82], "scl_type": "C-S協調・大ストライド高速持続型", "f_raw": [0.88, 0.82, 0.90, 0.91, 0.90, 0.89, 0.91], "workout_note": "1週前美W 82.5-37.2-11.5、最終W 67.9-11.7。父コントレイル×母父Tapit。青葉賞勝ち、神戸新聞杯2着。武豊×京都外回り直結の単勝EV=1.31妙味馬。", "w_sink_factor": 1.1289, "p_benter": 0.1113, "ev_win": 1.313, "ev_place": 1.132, "kelly_1_4": 0.0073, "smart_money_ratio": 1.081, "pred_rank": 3, "mark": "▲"},
+      {"bracket": 3, "num": 6, "name": "バステール", "jockey": "川田将雅", "trainer": "斉藤崇史 (栗東)", "sire": "キタサンブラック", "bms": "Aldebaran", "prev_wt": 472, "post_workout_wt": 464, "odds_win": 36.7, "s_base": 95.25, "r_fp_lb": 117.4, "derby_room_delta_d_m": 12.0, "lcr": 0.902, "eom": 0.882, "gamma_b": 0.885, "bcs": 0.072, "bcs_color": "Green", "scr_heavy_aptitude": 0.945, "scl": [0.80, 0.91, 0.88], "scl_type": "C-L強靭・軽量ロングスパート型", "f_raw": [0.82, 0.92, 0.87, 0.89, 0.88, 0.88, 0.86], "workout_note": "1週前CW 82.5-36.7-11.4、最終CW 85.8-37.8-11.6。父キタサンブラック×母父Aldebaran。弥生賞覇者・調教後464kg(-8kg)の超軽量で重馬場沈降散逸W_sinkが最小(0.934)。EV=2.77、1/4ケリー1.2%の最大投資推奨馬。", "w_sink_factor": 0.9344, "p_benter": 0.0754, "ev_win": 2.768, "ev_place": 1.719, "kelly_1_4": 0.0124, "smart_money_ratio": 1.791, "pred_rank": 4, "mark": "☆"},
+      {"bracket": 3, "num": 5, "name": "ジャスティンシカゴ", "jockey": "原優介", "trainer": "宮田敬介 (美浦)", "sire": "スワーヴリチャード", "bms": "キングカメハメハ", "prev_wt": 508, "post_workout_wt": 509, "odds_win": 13.7, "s_base": 95.55, "r_fp_lb": 117.9, "derby_room_delta_d_m": 2.8, "lcr": 0.886, "eom": 0.888, "gamma_b": 0.882, "bcs": 0.068, "bcs_color": "Green", "scr_heavy_aptitude": 0.908, "scl": [0.76, 0.94, 0.84], "scl_type": "C-L協調・高操縦性イン好位持続型", "f_raw": [0.85, 0.78, 0.90, 0.88, 0.86, 0.92, 0.89], "workout_note": "最終美W 66.6-38.2-11.9。父スワーヴリチャード×母父キングカメハメハ。セントライト記念2着。3枠5番インポケットから4角好位立ち回り。", "w_sink_factor": 1.1245, "p_benter": 0.0706, "ev_win": 0.967, "ev_place": 0.680, "kelly_1_4": 0.0, "smart_money_ratio": 1.327, "pred_rank": 5, "mark": "△"},
+      {"bracket": 2, "num": 3, "name": "アウダーシア", "jockey": "津村明秀", "trainer": "手塚貴久 (美浦)", "sire": "キズナ", "bms": "ルーラーシップ", "prev_wt": 506, "post_workout_wt": 502, "odds_win": 19.7, "s_base": 94.9, "r_fp_lb": 116.8, "derby_room_delta_d_m": 10.5, "lcr": 0.892, "eom": 0.876, "gamma_b": 0.870, "bcs": 0.074, "bcs_color": "Green", "scr_heavy_aptitude": 0.942, "scl": [0.86, 0.88, 0.75], "scl_type": "C-S高次均衡・イン溜め持続型", "f_raw": [0.78, 0.79, 0.86, 0.82, 0.84, 0.85, 0.87], "workout_note": "最終美W 68.5-38.7-11.6。父キズナ×母父ルーラーシップの重馬場巧者配合(SCR=0.942)かつ調教後502kg(-4kg)で2枠3番インから道悪浮上。", "w_sink_factor": 1.0938, "p_benter": 0.0595, "ev_win": 1.171, "ev_place": 0.865, "kelly_1_4": 0.0023, "smart_money_ratio": 1.572, "pred_rank": 6, "mark": "穴"},
+      {"bracket": 6, "num": 11, "name": "アスクエジンバラ", "jockey": "岩田康誠", "trainer": "福永祐一 (栗東)", "sire": "リオンディーズ", "bms": "マンハッタンカフェ", "prev_wt": 470, "post_workout_wt": 484, "odds_win": 23.1, "s_base": 94.75, "r_fp_lb": 116.5, "derby_room_delta_d_m": 3.5, "lcr": 0.904, "eom": 0.886, "gamma_b": 0.880, "bcs": 0.070, "bcs_color": "Green", "scr_heavy_aptitude": 0.955, "scl": [0.82, 0.89, 0.85], "scl_type": "C-L協調・春天血統道悪スタミナ型", "f_raw": [0.77, 0.88, 0.88, 0.86, 0.87, 0.84, 0.88], "workout_note": "1週前CW 83.6-10.9、最終CW 81.5-11.3。父リオンディーズ×母父マンハッタンカフェ(テーオーロイヤル同配合)×484kgで重馬場適性(SCR=0.955)特大。", "w_sink_factor": 1.0167, "p_benter": 0.0458, "ev_win": 1.057, "ev_place": 0.821, "kelly_1_4": 0.0007, "smart_money_ratio": 1.582, "pred_rank": 7, "mark": "穴"},
+      {"bracket": 1, "num": 1, "name": "エムズビギン", "jockey": "岩田望来", "trainer": "友道康夫 (栗東)", "sire": "キタサンブラック", "bms": "Galileo", "prev_wt": 508, "post_workout_wt": 512, "odds_win": 36.3, "s_base": 94.45, "r_fp_lb": 116.1, "derby_room_delta_d_m": 6.8, "lcr": 0.895, "eom": 0.864, "gamma_b": 0.858, "bcs": 0.082, "bcs_color": "Green", "scr_heavy_aptitude": 0.935, "scl": [0.82, 0.90, 0.78], "scl_type": "C-S協調・欧州持続追走型", "f_raw": [0.72, 0.78, 0.84, 0.80, 0.85, 0.82, 0.86], "workout_note": "1週前CW 83.9-11.2(一杯)、最終P 83.0-11.9。父キタサンブラック×母父Galileoの欧州底力配合で重馬場(9.2)でもストライド耐退縮(SCR=0.935)が大。", "w_sink_factor": 1.1378, "p_benter": 0.0318, "ev_win": 1.155, "ev_place": 0.803, "kelly_1_4": 0.0, "smart_money_ratio": 1.954, "pred_rank": 8, "mark": "穴"},
+      {"bracket": 7, "num": 15, "name": "シートゥサミット", "jockey": "酒井学", "trainer": "吉岡辰弥 (栗東)", "sire": "モーリス", "bms": "Discreet Cat", "prev_wt": 524, "post_workout_wt": 530, "odds_win": 51.6, "s_base": 94.35, "r_fp_lb": 116.0, "derby_room_delta_d_m": 9.2, "lcr": 0.888, "eom": 0.868, "gamma_b": 0.864, "bcs": 0.080, "bcs_color": "Green", "scr_heavy_aptitude": 0.938, "scl": [0.75, 0.88, 0.90], "scl_type": "L-C優位・父モーリス道悪ロングマクリ型", "f_raw": [0.74, 0.65, 0.83, 0.84, 0.83, 0.81, 0.85], "workout_note": "父モーリス×母父Discreet Cat。神戸新聞杯マクリ3着。単勝51.6倍に対し複勝に強いスマートマネー流入(SM_i=2.916)を検知。", "w_sink_factor": 1.2192, "p_benter": 0.0250, "ev_win": 1.290, "ev_place": 0.652, "kelly_1_4": 0.0, "smart_money_ratio": 2.916, "pred_rank": 9, "mark": "穴"},
+      {"bracket": 8, "num": 16, "name": "ショウナンハヤナミ", "jockey": "池添謙一", "trainer": "渡辺薫彦 (栗東)", "sire": "レイデオロ", "bms": "ディープインパクト", "prev_wt": 456, "post_workout_wt": 460, "odds_win": 46.2, "s_base": 93.85, "r_fp_lb": 115.0, "derby_room_delta_d_m": 7.4, "lcr": 0.896, "eom": 0.862, "gamma_b": 0.856, "bcs": 0.084, "bcs_color": "Green", "scr_heavy_aptitude": 0.928, "scl": [0.83, 0.86, 0.79], "scl_type": "C-S協調・最軽量460kg坂路猛時計型", "f_raw": [0.68, 0.90, 0.82, 0.81, 0.82, 0.76, 0.82], "workout_note": "池添謙一×最終栗坂52.9-12.0の猛時計。父レイデオロ×母父ディープインパクト。最軽量460kgで重馬場の土壌沈降ロスが極小。", "w_sink_factor": 0.9184, "p_benter": 0.0210, "ev_win": 0.968, "ev_place": 0.664, "kelly_1_4": 0.0, "smart_money_ratio": 2.304, "pred_rank": 10, "mark": "穴"},
+      {"bracket": 1, "num": 2, "name": "コンジェスタス", "jockey": "西村淳也", "trainer": "高野友和 (栗東)", "sire": "コントレイル", "bms": "Alamosa", "prev_wt": 528, "post_workout_wt": 534, "odds_win": 20.0, "s_base": 94.15, "r_fp_lb": 115.6, "derby_room_delta_d_m": 5.2, "lcr": 0.882, "eom": 0.848, "gamma_b": 0.842, "bcs": 0.105, "bcs_color": "Blue", "scr_heavy_aptitude": 0.840, "scl": [0.84, 0.86, 0.72], "scl_type": "C-S協調・先行粘着力型", "f_raw": [0.68, 0.58, 0.81, 0.79, 0.82, 0.78, 0.83], "workout_note": "最終栗坂54.3-12.2。父コントレイル×母父Alamosa。前走528kg→534kgの大型馬体で、重馬場では土壌沈降散逸W_sink(1.24倍)と坂2回の重力散逸が重荷。", "w_sink_factor": 1.2377, "p_benter": 0.0181, "ev_win": 0.362, "ev_place": 0.444, "kelly_1_4": 0.0, "smart_money_ratio": 1.370, "pred_rank": 11, "mark": "−"},
+      {"bracket": 7, "num": 14, "name": "マジョレルブルー", "jockey": "戸崎圭太", "trainer": "友道康夫 (栗東)", "sire": "コントレイル", "bms": "シンボリクリスエス", "prev_wt": 486, "post_workout_wt": 492, "odds_win": 43.8, "s_base": 93.1, "r_fp_lb": 113.6, "derby_room_delta_d_m": 5.0, "lcr": 0.890, "eom": 0.840, "gamma_b": 0.835, "bcs": 0.098, "bcs_color": "Blue", "scr_heavy_aptitude": 0.902, "scl": [0.77, 0.85, 0.81], "scl_type": "C-L優位・京都外回り持続型", "f_raw": [0.58, 0.83, 0.76, 0.78, 0.80, 0.77, 0.76], "workout_note": "友道厩舎×戸崎圭太。父コントレイル×母父シンボリクリスエス。長距離持続力はあるが上位勢とのスピード指数差。", "w_sink_factor": 1.0506, "p_benter": 0.0125, "ev_win": 0.546, "ev_place": 0.546, "kelly_1_4": 0.0, "smart_money_ratio": 2.021, "pred_rank": 12, "mark": "穴"},
+      {"bracket": 7, "num": 13, "name": "キンググローリー", "jockey": "丹内祐次", "trainer": "古賀慎明 (美浦)", "sire": "ダノンプレミアム", "bms": "Duke of Marmalade", "prev_wt": 466, "post_workout_wt": 480, "odds_win": 77.5, "s_base": 93.4, "r_fp_lb": 114.2, "derby_room_delta_d_m": 6.2, "lcr": 0.880, "eom": 0.838, "gamma_b": 0.832, "bcs": 0.108, "bcs_color": "Blue", "scr_heavy_aptitude": 0.910, "scl": [0.79, 0.84, 0.80], "scl_type": "C-L均衡・欧州母系持続先行型", "f_raw": [0.62, 0.61, 0.77, 0.76, 0.76, 0.79, 0.77], "workout_note": "父ダノンプレミアム×母父Duke of Marmalade。前走466kg→調教後480kg(+14kg)の変動と上位陣とのスピード差が課題。", "w_sink_factor": 1.0000, "p_benter": 0.0114, "ev_win": 0.886, "ev_place": 0.878, "kelly_1_4": 0.0, "smart_money_ratio": 2.136, "pred_rank": 13, "mark": "穴"},
+      {"bracket": 6, "num": 12, "name": "サノノグレーター", "jockey": "田辺裕信", "trainer": "尾形和幸 (美浦)", "sire": "グレーターロンドン", "bms": "ジャングルポケット", "prev_wt": 470, "post_workout_wt": 472, "odds_win": 103.6, "s_base": 93.2, "r_fp_lb": 113.8, "derby_room_delta_d_m": 8.4, "lcr": 0.884, "eom": 0.842, "gamma_b": 0.838, "bcs": 0.095, "bcs_color": "Blue", "scr_heavy_aptitude": 0.885, "scl": [0.87, 0.81, 0.72], "scl_type": "S-C優位・中距離軽量差し型", "f_raw": [0.60, 0.84, 0.78, 0.77, 0.75, 0.76, 0.78], "workout_note": "最終美W 68.2-11.6。父グレーターロンドン×母父ジャングルポケット。472kg軽量も3000mへの延長が課題。", "w_sink_factor": 0.9669, "p_benter": 0.0097, "ev_win": 1.002, "ev_place": 1.358, "kelly_1_4": 0.0, "smart_money_ratio": 1.722, "pred_rank": 14, "mark": "穴"},
+      {"bracket": 8, "num": 17, "name": "チャリングクロス", "jockey": "石川裕紀人", "trainer": "奥村武 (美浦)", "sire": "キタサンブラック", "bms": "Cape Cross", "prev_wt": 506, "post_workout_wt": 497, "odds_win": 125.5, "s_base": 93.0, "r_fp_lb": 113.4, "derby_room_delta_d_m": 6.0, "lcr": 0.886, "eom": 0.836, "gamma_b": 0.830, "bcs": 0.102, "bcs_color": "Blue", "scr_heavy_aptitude": 0.922, "scl": [0.81, 0.83, 0.77], "scl_type": "C-S均衡・父キタサン×母父Cape Cross重馬場先行型", "f_raw": [0.56, 0.77, 0.76, 0.75, 0.77, 0.71, 0.76], "workout_note": "クロワデュノール全弟(父キタサンブラック×母父Cape Cross)。道悪適性はあるが8枠17番からの外回りコースロスが課題。", "w_sink_factor": 1.0721, "p_benter": 0.0074, "ev_win": 0.926, "ev_place": 1.064, "kelly_1_4": 0.0, "smart_money_ratio": 2.411, "pred_rank": 15, "mark": "穴"},
+      {"bracket": 4, "num": 7, "name": "ラージアンサンブル", "jockey": "坂井瑠星", "trainer": "武井亮 (美浦)", "sire": "ベンバトル", "bms": "ジャスタウェイ", "prev_wt": 476, "post_workout_wt": 481, "odds_win": 117.2, "s_base": 92.3, "r_fp_lb": 112.4, "derby_room_delta_d_m": 5.5, "lcr": 0.885, "eom": 0.832, "gamma_b": 0.824, "bcs": 0.112, "bcs_color": "Blue", "scr_heavy_aptitude": 0.912, "scl": [0.72, 0.82, 0.86], "scl_type": "L-C優位・欧州Dubawi系タフネス型", "f_raw": [0.50, 0.78, 0.75, 0.74, 0.76, 0.72, 0.75], "workout_note": "父ベンバトル(Dubawi直仔)×481kg。重馬場の沈降散逸は小さいが、GI上位勢との基底スピード指数差が課題。", "w_sink_factor": 1.0042, "p_benter": 0.0063, "ev_win": 0.738, "ev_place": 0.745, "kelly_1_4": 0.0, "smart_money_ratio": 3.057, "pred_rank": 16, "mark": "穴"},
+      {"bracket": 8, "num": 18, "name": "ナリタエスペランサ", "jockey": "北村友一", "trainer": "福永祐一 (栗東)", "sire": "キタサンブラック", "bms": "Invincible Spirit", "prev_wt": 470, "post_workout_wt": 478, "odds_win": 135.9, "s_base": 92.6, "r_fp_lb": 112.8, "derby_room_delta_d_m": 6.5, "lcr": 0.885, "eom": 0.830, "gamma_b": 0.826, "bcs": 0.106, "bcs_color": "Blue", "scr_heavy_aptitude": 0.915, "scl": [0.78, 0.80, 0.84], "scl_type": "L-C優位・軽量478kg外枠消耗戦型", "f_raw": [0.52, 0.79, 0.74, 0.75, 0.78, 0.69, 0.74], "workout_note": "父キタサンブラック×478kgの軽量馬格だが、8枠18番の大外枠がマイナス。", "w_sink_factor": 0.9917, "p_benter": 0.0058, "ev_win": 0.790, "ev_place": 1.055, "kelly_1_4": 0.0, "smart_money_ratio": 2.445, "pred_rank": 17, "mark": "穴"},
+      {"bracket": 2, "num": 4, "name": "ショウナンガルフ", "jockey": "田山旺佑", "trainer": "須貝尚介 (栗東)", "sire": "ハービンジャー", "bms": "ハーツクライ", "prev_wt": 474, "post_workout_wt": 480, "odds_win": 209.5, "s_base": 91.6, "r_fp_lb": 111.2, "derby_room_delta_d_m": 4.5, "lcr": 0.888, "eom": 0.825, "gamma_b": 0.815, "bcs": 0.118, "bcs_color": "Blue", "scr_heavy_aptitude": 0.905, "scl": [0.85, 0.76, 0.70], "scl_type": "S優位・軽量欧州血統型", "f_raw": [0.42, 0.82, 0.72, 0.70, 0.74, 0.75, 0.72], "workout_note": "最終栗坂55.3-12.4。父ハービンジャー×480kgの重馬場耐性はあるが、自己条件大敗後の絶対巡航速度に壁。", "w_sink_factor": 1.0000, "p_benter": 0.0028, "ev_win": 0.580, "ev_place": 1.916, "kelly_1_4": 0.0, "smart_money_ratio": 1.765, "pred_rank": 18, "mark": "穴"}
+    ]};
+
+    const BRACKET_CLASSES = {
+      1: "bg-white text-black",
+      2: "bg-black text-white border border-zinc-600",
+      3: "bg-red-600 text-white",
+      4: "bg-blue-600 text-white",
+      5: "bg-yellow-400 text-black",
+      6: "bg-green-600 text-white",
+      7: "bg-orange-500 text-white",
+      8: "bg-pink-400 text-black"
+    };
+
+    const MARK_CLASSES = {
+      "◎": "text-yellow-300 border-yellow-400/60 bg-yellow-400/10",
+      "◯": "text-cyan-300 border-cyan-400/60 bg-cyan-400/10",
+      "▲": "text-purple-300 border-purple-400/60 bg-purple-400/10",
+      "☆": "text-amber-300 border-amber-400/60 bg-amber-400/10",
+      "△": "text-zinc-300 border-zinc-500/60 bg-zinc-500/10",
+      "穴": "text-rose-300 border-rose-400/60 bg-rose-400/10",
+      "−": "text-zinc-400 border-zinc-700 bg-zinc-800/20"
+    };
+
+    let currentSort = "pred";
+    let expandedNum = null;
+
+    function renderHeader() {
+      const info = DATA.race_info;
+      const rheo = DATA.track_rheology;
+      document.getElementById('header-race-name').textContent = info.race_name;
+      document.getElementById('header-course').innerHTML = `📍 ${info.course} (${info.distance_m}m・${info.surface})`;
+      
+      const dt = new Date(info.post_time);
+      const timeStr = `${dt.getMonth()+1}月${dt.getDate()}日 ${dt.getHours()}:${String(dt.getMinutes()).padStart(2, '0')} 発走`;
+      document.getElementById('header-time').innerHTML = `⏰ ${timeStr}`;
+      
+      document.getElementById('badge-condition').innerHTML = `💧 芝：${rheo.condition}`;
+      document.getElementById('badge-cushion').textContent = `クッション値 ${rheo.cushion_value.toFixed(1)}`;
+      document.getElementById('merkle-seal-text').textContent = info.merkle_seal;
+
+      // Rheology stats
+      const statsHtml = `
+        <div class="rounded-lg bg-zinc-950/60 p-2 border border-zinc-800/40">
+          <div class="text-[10px] text-zinc-400">クッション値</div>
+          <div class="font-mono text-base font-bold text-zinc-100">${rheo.cushion_value.toFixed(1)}</div>
+        </div>
+        <div class="rounded-lg bg-zinc-950/60 p-2 border border-zinc-800/40">
+          <div class="text-[10px] text-zinc-400">含水率 G前</div>
+          <div class="font-mono text-base font-bold text-zinc-100">${rheo.turf_moisture_goal_pct}%</div>
+        </div>
+        <div class="rounded-lg bg-zinc-950/60 p-2 border border-zinc-800/40">
+          <div class="text-[10px] text-zinc-400">含水率 4角</div>
+          <div class="font-mono text-base font-bold text-zinc-100">${rheo.turf_moisture_4c_pct}%</div>
+        </div>
+        <div class="rounded-lg bg-zinc-950/60 p-2 border border-zinc-800/40">
+          <div class="text-[10px] text-zinc-400">実効ΔT</div>
+          <div class="font-mono text-base font-bold text-zinc-100">+${rheo.effective_track_delta_t_sec.toFixed(2)}s</div>
+        </div>
+      `;
+      document.getElementById('rheology-stats').innerHTML = statsHtml;
+      document.getElementById('rheology-conclusion').textContent = rheo.tactical_conclusion;
+      document.getElementById('horse-count-badge').textContent = `${DATA.horses.length}頭`;
+    }
+
+    function generateRadarSvg(f_raw) {
+      const size = 220;
+      const center = size / 2;
+      const radius = 75;
+      const labels = ['S_base', 'LCR', 'EOM', 'JCG', 'SCL', 'ODE', 'SM_i'];
+      const numAxes = 7;
+
+      let gridSvg = '';
+      [0.2, 0.4, 0.6, 0.8, 1.0].forEach(level => {
+        let pts = [];
+        for (let i = 0; i < numAxes; i++) {
+          const angle = -Math.PI / 2 + (2 * Math.PI * i) / numAxes;
+          const r = radius * level;
+          const x = center + r * Math.cos(angle);
+          const y = center + r * Math.sin(angle);
+          pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+        }
+        gridSvg += `<polygon points="${pts.join(' ')}" fill="none" stroke="#27272a" stroke-width="1" />`;
+      });
+
+      let axisSvg = '';
+      let polygonPts = [];
+      for (let i = 0; i < numAxes; i++) {
+        const angle = -Math.PI / 2 + (2 * Math.PI * i) / numAxes;
+        const xMax = center + radius * Math.cos(angle);
+        const yMax = center + radius * Math.sin(angle);
+        axisSvg += `<line x1="${center}" y1="${center}" x2="${xMax.toFixed(1)}" y2="${yMax.toFixed(1)}" stroke="#3f3f46" stroke-width="1" />`;
+        
+        // Label position
+        const xLbl = center + (radius + 18) * Math.cos(angle);
+        const yLbl = center + (radius + 14) * Math.sin(angle) + 4;
+        axisSvg += `<text x="${xLbl.toFixed(1)}" y="${yLbl.toFixed(1)}" text-anchor="middle" font-size="10" fill="#a1a1aa" font-weight="bold">${labels[i]}</text>`;
+
+        // Value point
+        const val = Math.max(0.4, Math.min(1.0, f_raw[i]));
+        const rVal = radius * val;
+        const xVal = center + rVal * Math.cos(angle);
+        const yVal = center + rVal * Math.sin(angle);
+        polygonPts.push(`${xVal.toFixed(1)},${yVal.toFixed(1)}`);
+      }
+
+      const polySvg = `<polygon points="${polygonPts.join(' ')}" fill="#10b981" fill-opacity="0.35" stroke="#34d399" stroke-width="2" />`;
+
+      return `
+        <svg viewBox="0 0 ${size} ${size}" class="w-full h-48 max-w-[240px] mx-auto">
+          ${gridSvg}
+          ${axisSvg}
+          ${polySvg}
+        </svg>
+      `;
+    }
+
+    function renderHorses() {
+      const container = document.getElementById('horses-list');
+      let sorted = [...DATA.horses];
+
+      if (currentSort === 'pred') sorted.sort((a,b) => a.pred_rank - b.pred_rank);
+      else if (currentSort === 'pwin') sorted.sort((a,b) => b.p_benter - a.p_benter);
+      else if (currentSort === 'odds') sorted.sort((a,b) => a.odds_win - b.odds_win);
+      else if (currentSort === 'kelly') sorted.sort((a,b) => (b.kelly_1_4 - a.kelly_1_4) || (b.ev_win - a.ev_win));
+
+      let html = '';
+      sorted.forEach(h => {
+        const isExp = expandedNum === h.num;
+        const evHi = h.ev_win > 1.0;
+        const smHi = h.smart_money_ratio >= 1.5;
+        const markCls = MARK_CLASSES[h.mark] || MARK_CLASSES['−'];
+        const bCls = BRACKET_CLASSES[h.bracket] || 'bg-zinc-800 text-white';
+
+        html += `
+          <div class="rounded-xl border ${isExp ? 'border-emerald-500/50 bg-zinc-900' : 'border-zinc-800 bg-zinc-900/90'} transition-all overflow-hidden shadow-sm">
+            <div class="p-3 cursor-pointer hover:bg-zinc-800/40" onclick="toggleExpand(${h.num})">
+              <div class="flex items-center gap-2.5">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-base font-bold ${markCls}">${h.mark}</span>
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded font-mono text-xs font-bold ${bCls}">${h.num}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="font-bold text-zinc-100 text-sm sm:text-base">${h.name}</span>
+                    ${smHi ? '<span class="inline-flex items-center gap-0.5 rounded px-1.5 py-0.2 bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-bold">🔥穴SM</span>' : ''}
+                  </div>
+                  <div class="text-[11px] text-zinc-400 truncate">${h.jockey} · ${h.trainer}</div>
+                </div>
+                <div class="text-right">
+                  <div class="font-mono text-sm sm:text-base font-bold text-emerald-400">${(h.p_benter * 100).toFixed(1)}%</div>
+                  <div class="text-[10px] text-zinc-400 font-mono">単 ${h.odds_win.toFixed(1)}倍</div>
+                </div>
+              </div>
+
+              <!-- Bar & Key stats row -->
+              <div class="mt-2.5">
+                <div class="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-emerald-500 rounded-full" style="width: ${Math.min(100, h.p_benter * 100 * 2.5)}%"></div>
+                </div>
+                <div class="grid grid-cols-5 gap-1 pt-2 font-mono text-center text-[10px]">
+                  <div class="rounded bg-zinc-950/50 py-1">
+                    <div class="text-zinc-400 text-[9px]">単EV</div>
+                    <div class="${evHi ? 'text-emerald-400 font-bold' : 'text-zinc-300'}">${h.ev_win.toFixed(2)}</div>
+                  </div>
+                  <div class="rounded bg-zinc-950/50 py-1 ${h.kelly_1_4 > 0 ? 'bg-emerald-500/10 border border-emerald-500/30' : ''}">
+                    <div class="text-zinc-400 text-[9px]">Kelly</div>
+                    <div class="${h.kelly_1_4 > 0 ? 'text-emerald-300 font-bold' : 'text-zinc-400'}">${h.kelly_1_4 > 0 ? (h.kelly_1_4 * 100).toFixed(1) + '%' : '0%'}</div>
+                  </div>
+                  <div class="rounded bg-zinc-950/50 py-1">
+                    <div class="text-zinc-400 text-[9px]">SM_i</div>
+                    <div class="${smHi ? 'text-amber-300 font-bold' : 'text-zinc-300'}">${h.smart_money_ratio.toFixed(2)}</div>
+                  </div>
+                  <div class="rounded bg-zinc-950/50 py-1">
+                    <div class="text-zinc-400 text-[9px]">SCR</div>
+                    <div class="text-zinc-300">${h.scr_heavy_aptitude.toFixed(2)}</div>
+                  </div>
+                  <div class="rounded bg-zinc-950/50 py-1">
+                    <div class="text-zinc-400 text-[9px]">Δd</div>
+                    <div class="text-zinc-300">${h.derby_room_delta_d_m.toFixed(1)}m</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detail Drawer -->
+            ${isExp ? `
+              <div class="border-t border-zinc-800/80 bg-zinc-950/70 p-4 space-y-4">
+                <div class="text-xs font-semibold text-purple-300 bg-purple-500/10 px-2 py-1 rounded inline-block">
+                  SCL動機: ${h.scl_type}
+                </div>
+
+                <!-- Radar & Specs Grid -->
+                <div class="grid sm:grid-cols-2 gap-4 items-center">
+                  <div>
+                    <div class="text-[11px] font-bold text-zinc-400 mb-1 text-center">K=7 直交基底レーダー</div>
+                    ${generateRadarSvg(h.f_raw)}
+                  </div>
+                  <div class="space-y-2.5">
+                    <div class="text-xs text-zinc-300 leading-relaxed bg-zinc-900/80 p-2.5 rounded border border-zinc-800">
+                      <div class="text-[10px] text-zinc-400 font-bold mb-1">調教・生体バイオメトリクス所見</div>
+                      ${h.workout_note}
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 font-mono text-xs">
+                      <div class="bg-zinc-900 p-2 rounded">
+                        <span class="text-zinc-400 text-[10px]">馬体重</span><br/>
+                        ${h.prev_wt}→${h.post_workout_wt}kg (${h.post_workout_wt - h.prev_wt >= 0 ? '+' : ''}${h.post_workout_wt - h.prev_wt})
+                      </div>
+                      <div class="bg-zinc-900 p-2 rounded">
+                        <span class="text-zinc-400 text-[10px]">BCS (毛艶)</span><br/>
+                        ${h.bcs.toFixed(3)} (${h.bcs_color})
+                      </div>
+                      <div class="bg-zinc-900 p-2 rounded">
+                        <span class="text-zinc-400 text-[10px]">血統</span><br/>
+                        <span class="text-[11px] font-sans">${h.sire} × ${h.bms}</span>
+                      </div>
+                      <div class="bg-zinc-900 p-2 rounded">
+                        <span class="text-zinc-400 text-[10px]">90%信頼区間</span><br/>
+                        [${(h.ci_90[0]*100).toFixed(1)}%, ${(h.ci_90[1]*100).toFixed(1)}%]
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderPortfolio() {
+      const horses = DATA.horses;
+      const axis = horses.find(h => h.pred_rank === 1);
+      const maxKelly = [...horses].sort((a,b) => b.kelly_1_4 - a.kelly_1_4)[0];
+      const smPicks = horses.filter(h => h.smart_money_ratio >= 1.5 && h.ev_win > 1.0 && h.num !== maxKelly.num);
+      const totalKelly = horses.reduce((acc, h) => acc + h.kelly_1_4, 0);
+
+      document.getElementById('portfolio-total-kelly').textContent = `合計 ${(totalKelly * 100).toFixed(1)}%`;
+
+      const cardsHtml = `
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-3.5 space-y-1.5">
+          <div class="text-xs font-bold text-yellow-300 flex items-center gap-1">🏆 本命軸</div>
+          <div class="text-sm font-bold text-zinc-100">${axis.mark} ${axis.num} ${axis.name}</div>
+          <div class="text-[11px] text-zinc-400 font-mono">単勝 ${axis.odds_win.toFixed(1)}倍 · 勝率 ${(axis.p_benter*100).toFixed(1)}%</div>
+          <div class="text-[11px] text-zinc-400">勝率首位だがEVは薄いため配分控えめ（${(axis.kelly_1_4*100).toFixed(1)}%）。複勝厚め。</div>
+        </div>
+
+        <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-3.5 space-y-1.5">
+          <div class="text-xs font-bold text-emerald-300 flex items-center gap-1">📈 期待値妙味（最大ケリー）</div>
+          <div class="text-sm font-bold text-zinc-100">${maxKelly.mark} ${maxKelly.num} ${maxKelly.name}</div>
+          <div class="text-[11px] text-zinc-400 font-mono">単勝 ${maxKelly.odds_win.toFixed(1)}倍 · 単EV ${maxKelly.ev_win.toFixed(2)}</div>
+          <div class="text-[11px] text-zinc-400">単勝EV最大。推奨配分比率 ${(maxKelly.kelly_1_4*100).toFixed(1)}% の勝負銘柄。</div>
+        </div>
+
+        <div class="rounded-xl border border-rose-500/30 bg-rose-500/5 p-3.5 space-y-1.5">
+          <div class="text-xs font-bold text-rose-300 flex items-center gap-1">⚡ 穴スマートマネー</div>
+          ${smPicks.map(h => `
+            <div class="text-sm font-bold text-zinc-100">${h.mark} ${h.num} ${h.name} <span class="font-mono text-xs text-rose-300">(SM ${h.smart_money_ratio.toFixed(2)})</span></div>
+          `).join('')}
+          <div class="text-[11px] text-zinc-400">大衆心理の過小評価を検知した高妙味穴馬。</div>
+        </div>
+      `;
+      document.getElementById('portfolio-cards').innerHTML = cardsHtml;
+
+      // Bars
+      const kellyHorses = horses.filter(h => h.kelly_1_4 > 0).sort((a,b) => b.kelly_1_4 - a.kelly_1_4);
+      let barsHtml = '';
+      kellyHorses.forEach(h => {
+        const pctVal = (h.kelly_1_4 * 100).toFixed(1);
+        barsHtml += `
+          <div class="flex items-center gap-3 text-xs">
+            <span class="w-24 truncate font-medium text-zinc-300">${h.num} ${h.name}</span>
+            <div class="flex-1 bg-zinc-800 h-3 rounded-full overflow-hidden">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: ${Math.min(100, h.kelly_1_4 * 100 * 50)}%"></div>
+            </div>
+            <span class="w-12 text-right font-mono font-bold text-emerald-400">${pctVal}%</span>
+          </div>
+        `;
+      });
+      document.getElementById('portfolio-bars').innerHTML = barsHtml;
+    }
+
+    function toggleExpand(num) {
+      expandedNum = (expandedNum === num) ? null : num;
+      renderHorses();
+    }
+
+    // Events
+    document.getElementById('toggle-rheology-btn').addEventListener('click', () => {
+      const b = document.getElementById('rheology-body');
+      const arr = document.getElementById('rheology-arrow');
+      b.classList.toggle('hidden');
+      arr.classList.toggle('rotate-180');
+    });
+
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.sort-btn').forEach(b => {
+          b.className = 'sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200';
+        });
+        e.target.className = 'sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300';
+        currentSort = e.target.getAttribute('data-sort');
+        renderHorses();
+      });
+    });
+
+    // Initialize
+    renderHeader();
+    renderHorses();
+    renderPortfolio();
+  </script>
+</body>
 </html>
