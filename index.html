@@ -117,6 +117,139 @@
         <div class="space-y-2" id="portfolio-bars"></div>
       </div>
     </div>
+
+    <!-- Glossary Section -->
+    <details class="pt-2 group">
+      <summary class="cursor-pointer flex items-center gap-2 text-sm sm:text-base font-semibold text-zinc-200 select-none py-1">
+        <span class="text-zinc-500 transition-transform duration-200 group-open:rotate-90">▶</span>
+        📖 K=7分析指標・用語集（タップで展開）
+      </summary>
+      <div class="mt-2 rounded-xl border border-zinc-800 bg-zinc-900/90 p-4 space-y-5 text-xs sm:text-[13px]">
+        <div>
+          <h3 class="text-zinc-200 font-semibold mb-1">① レース情報 ＆ 馬場レオロジー</h3>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">Merkle Seal</div>
+          <div class="text-zinc-400 leading-relaxed">マークルシール（SHA-256）。事後改ざん防止ハッシュ。発走前の予測勝率・オッズ・評価データがレース後に書き換えられていないことを保証する電子封印。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">クッション値</div>
+          <div class="text-zinc-400 leading-relaxed">JRA公式発表の芝反発硬度指標（8.0未満: 軟らかい、8.0〜9.5: 標準、9.5超: 硬い）。数値が低いほど脚が馬場にめり込み、推進力散逸が生じる。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">含水率 (G前/4角)</div>
+          <div class="text-zinc-400 leading-relaxed">ゴール前および第4コーナー地点の芝土壌中の水分パーセンテージ。クッション値と連動して土壌せん断抵抗を算出。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">実効ΔT</div>
+          <div class="text-zinc-400 leading-relaxed">馬場差遅延秒数。良馬場基準時計と比較し、現在の馬場状態で1走あたり何秒時計が余分にかかるかを表す。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">W<sub>sink</sub></div>
+          <div class="text-zinc-400 leading-relaxed">土壌沈降散逸係数。体重の2乗則（(体重/480)<sup>2</sup>）により、大型馬ほど道悪で脚を取られる物理ペナルティ係数。</div>
+        </div>
+        </div>
+        <div>
+          <h3 class="text-zinc-200 font-semibold mb-1">② カード一覧の主要指標</h3>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">P_win (p_benter)</div>
+          <div class="text-zinc-400 leading-relaxed">正準勝率。市場オッズ（Shinモデル）から大衆バイアスと控除率を除去し、ジークンドー物理モデルと最適合成した勝率。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">単EV</div>
+          <div class="text-zinc-400 leading-relaxed">単勝期待値 ＝ 正準勝率 × 単勝オッズ。1.00を超えると長期的に回収率がプラスになる水準。1.00未満は過剰人気で控除率負けする。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">Kelly (1/4ケリー)</div>
+          <div class="text-zinc-400 leading-relaxed">ケリー資金配分比率。推定誤差や連敗時のドローダウン（資産下落幅）を大幅に抑制しつつ、長期的な資本成長率を最大化するための推奨投票比率。実戦リスクを抑えるため1/4に縮小適用。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">SM_i</div>
+          <div class="text-zinc-400 leading-relaxed">スマートマネー比率。大口・プロ投票の流入検知指数。単勝と複勝の売上構造乖離から算出。1.50以上がプロ資金集中検知の目安（該当馬には 🔥穴SM バッジ表示）。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">SCR</div>
+          <div class="text-zinc-400 leading-relaxed">ストライド耐退縮。道悪・荒れ馬場での跳びの維持力。重馬場でストライドが縮みにくい適性度（1.00に近いほど道悪巧者）。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">Δd</div>
+          <div class="text-zinc-400 leading-relaxed">幾何距離ロス。枠順とコーナー旋回によって、最内ラチ沿い基準から余分に走らされる外回り実効距離（メートル）。</div>
+        </div>
+        </div>
+        <div>
+          <h3 class="text-zinc-200 font-semibold mb-1">③ K=7 直交基底レーダーチャート</h3>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">S_base</div>
+          <div class="text-zinc-400 leading-relaxed">基底スピード能力。過去実績・着差・レース水準から、不利・トラックバイアスを反事実復元した純粋走力指数。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">LCR</div>
+          <div class="text-zinc-400 leading-relaxed">四肢長比・骨格幾何。体幹長に対する手足の長さの比率。高LCR＝大ストライド長距離型、低LCR＝高ピッチ小回り型。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">EOM</div>
+          <div class="text-zinc-400 leading-relaxed">調教動作効率。最終追い切り・パドック映像から測定した関節連動性と推進力変換効率。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">JCG</div>
+          <div class="text-zinc-400 leading-relaxed">枠順・コース・騎手幾何。枠順とコース形状に対する騎手の立ち回り適合度。内ラチ沿い距離ロス削減の総合力。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">SCL</div>
+          <div class="text-zinc-400 leading-relaxed">神経動機構造。S（Speed / Self-Dominance）: 能動的主導権・先行支配・自律型／C（Competition / Combat）: 相手関係集中・闘争摩擦駆動・勝負根性型／L（Length / Latent Space）: 空間依存・大ストライド持続・単独リズム型。※距離適性や脚質への一次元縮退、神経伝達物質の対応付けは行わない。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">ODE</div>
+          <div class="text-zinc-400 leading-relaxed">生体負債・回復力学。レースや調教の疲労・反動が体から抜けているかを解いたコンディション健全度（反動検知を含む）。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">SM_i</div>
+          <div class="text-zinc-400 leading-relaxed">スマートマネー。大衆心理の盲点（過小評価）と、プロ投票の集中的な流入度合い。</div>
+        </div>
+        </div>
+        <div>
+          <h3 class="text-zinc-200 font-semibold mb-1">④ 生体シグナル（代償度）＆ 予想印</h3>
+          <div class="space-y-1.5 py-1.5 border-b border-zinc-800/50">
+            <div><span class="font-bold text-emerald-300">GREEN</span> <span class="font-mono text-zinc-500">0.000 〜 0.085</span><span class="text-zinc-400"> ：良好。代償運動が極小で、推進エネルギーが逃げず前へ直結している状態。</span></div>
+            <div><span class="font-bold text-sky-300">BLUE</span> <span class="font-mono text-zinc-500">0.086 〜 0.249</span><span class="text-zinc-400"> ：許容。軽微な代償動作はあるが、競走能力に致命的影響を与えない実戦許容水準。</span></div>
+            <div><span class="font-bold text-amber-300">YELLOW</span> <span class="font-mono text-zinc-500">0.250 〜 0.499</span><span class="text-zinc-400"> ：警告。代償動作が顕著で推進力散逸を検知。期待値を割り引いて評価する区分（フェイルセーフ区分）。</span></div>
+            <div><span class="font-bold text-rose-300">RED</span> <span class="font-mono text-zinc-500">0.500 〜 1.000</span><span class="text-zinc-400"> ：危険・除外。生体アラート。勝率重みを遮断し投票を強制停止する区分（フェイルセーフ区分）。</span></div>
+            <p class="text-zinc-500 pt-1">生体シグナルは、調教坂路やパドックで「顎上がり・首の硬さ・ハミ反抗」などの推進力を逃がす代償動作がないかの判定です。</p>
+          </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">90%信頼区間</div>
+          <div class="text-zinc-400 leading-relaxed">ベイズ事後分布における勝率のブレ幅（例：[21.4%, 27.8%]）。幅が狭いほど予測が安定。</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：◎</div>
+          <div class="text-zinc-400 leading-relaxed">本命軸（正準勝率首位・最も勝ち負けの確率が高い馬）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：◯</div>
+          <div class="text-zinc-400 leading-relaxed">対抗（上位評価だが、馬場沈降散逸やオッズロックイン等の懸念材料を抱える馬）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：▲</div>
+          <div class="text-zinc-400 leading-relaxed">単穴（展開・コース適性合致でアタマまで突き抜ける爆発力を持つ馬）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：☆</div>
+          <div class="text-zinc-400 leading-relaxed">期待値妙味・最大ケリー（単勝EVが最大で、資金配分を最も厚くすべき勝負銘柄）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：△</div>
+          <div class="text-zinc-400 leading-relaxed">連下・相手候補（枠順や立ち回り次第で2〜3着・複勝圏に食い込む実力馬）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：穴</div>
+          <div class="text-zinc-400 leading-relaxed">スマートマネー穴馬（大衆人気は薄いが、過小評価とプロ資金流入が検知された妙味馬）</div>
+        </div>
+        <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
+          <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">印：−</div>
+          <div class="text-zinc-400 leading-relaxed">消し（過大人気で単勝EVが低く、期待値的に妙味がない危険馬）</div>
+        </div>
+        </div>
+      </div>
+    </details>
   </div>
 
   <script>
