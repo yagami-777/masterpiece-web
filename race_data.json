@@ -1053,5 +1053,9 @@
       "pred_rank": 18,
       "mark": "穴"
     }
-  ]
+  ],
+  "meta": {
+    "updated_at": "2026-10-28",
+    "track_stage": "final"
+  }
 }
