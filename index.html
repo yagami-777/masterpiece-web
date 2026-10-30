@@ -54,6 +54,12 @@
           <span class="inline-flex items-center gap-1 rounded-md border border-cyan-400/40 bg-cyan-500/10 font-mono px-2 py-1 text-xs font-semibold text-cyan-300" id="badge-cushion"></span>
           <span class="inline-flex items-center gap-1 rounded-md border border-zinc-500/40 bg-zinc-500/10 px-2 py-1 text-xs font-semibold text-zinc-300" id="badge-updated"></span>
           <span class="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs font-semibold" id="badge-track-stage"></span>
+          <button id="refresh-data-btn" class="inline-flex items-center gap-1.5 rounded-lg border border-cyan-500/40 bg-cyan-500/10 hover:bg-cyan-500/20 active:scale-95 px-3 py-1.5 text-xs font-semibold text-cyan-300 transition shadow-sm">
+            <svg id="refresh-icon" class="h-3.5 w-3.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span id="refresh-text">最新データ更新</span>
+          </button>
           <button id="glossary-open" class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-800/80 px-3 py-1.5 text-xs font-medium text-zinc-200 shadow-sm transition hover:bg-zinc-700">？ 用語解説</button>
         </div>
       </div>
@@ -1235,6 +1241,43 @@
       renderPortfolio();
     }
     loadAndRender();
+
+    // リアルタイム即時更新ハンドラ（リロードなしで最新JSONを再取得・再描画）
+    const refreshBtn = document.getElementById('refresh-data-btn');
+    const refreshIcon = document.getElementById('refresh-icon');
+    const refreshText = document.getElementById('refresh-text');
+
+    async function handleRealtimeRefresh() {
+      if (refreshBtn.disabled) return;
+      refreshBtn.disabled = true;
+      refreshIcon.classList.add('animate-spin');
+      refreshText.textContent = 'データ取得中...';
+
+      try {
+        const res = await fetch('./race_data.json?t=' + Date.now());
+        if (res.ok) {
+          DATA = await res.json();
+          renderHeader();
+          renderHorses();
+          renderPortfolio();
+          const now = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          refreshText.textContent = `更新完了 (${now})`;
+        } else {
+          refreshText.textContent = '更新失敗';
+        }
+      } catch (err) {
+        console.error('Fetch failed:', err);
+        refreshText.textContent = '通信エラー';
+      } finally {
+        refreshIcon.classList.remove('animate-spin');
+        setTimeout(() => {
+          refreshBtn.disabled = false;
+          refreshText.textContent = '最新データ更新';
+        }, 3000);
+      }
+    }
+
+    refreshBtn.addEventListener('click', handleRealtimeRefresh);
   </script>
 
   <div id="glossary-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
