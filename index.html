@@ -105,6 +105,14 @@
         </div>
       </div>
 
+      <div class="flex flex-wrap items-center gap-1 pt-1" id="filter-buttons">
+        <span class="text-[10px] text-zinc-500 mr-0.5">絞り込み:</span>
+        <button data-filter="all" class="filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium bg-zinc-100/15 text-zinc-100">すべて</button>
+        <button data-filter="ev" class="filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200">EV 1超え</button>
+        <button data-filter="kelly" class="filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200">ケリー配分あり</button>
+        <button data-filter="sm" class="filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200">SM 1.5以上</button>
+      </div>
+
       <!-- Horses Container -->
       <div class="space-y-2.5" id="horses-list"></div>
       <p class="text-[11px] text-zinc-400 flex items-center gap-1.5 pt-1">
@@ -290,6 +298,7 @@
     };
 
     let currentSort = "pwin";
+    let currentFilter = "all";
     let expandedNum = null; // 初期展開は予想1位（◎）に追随する
     let expandedTouched = false;
 
@@ -447,6 +456,19 @@
       const dispVal = h => (h[dispMeta.key] ?? (dispMeta.fmt === 'pct' ? h.p_benter : 0));
       const dispText = h => dispMeta.fmt === 'pct' ? (dispVal(h) * 100).toFixed(1) + '%' : dispVal(h).toFixed(2);
       const dispBar = h => Math.min(100, dispMeta.fmt === 'pct' ? dispVal(h) * 100 * 2.5 : dispVal(h) * 40);
+
+      const FILTERS = {
+        ev: h => h.ev_win > 1.0,
+        kelly: h => h.kelly_1_4 > 0,
+        sm: h => (h.smart_money_ratio ?? 0) >= 1.5
+      };
+      if (FILTERS[currentFilter]) sorted = sorted.filter(FILTERS[currentFilter]);
+      const badge = document.getElementById('horse-count-badge');
+      if (badge) badge.textContent = currentFilter === 'all' ? `${DATA.horses.length}頭` : `${sorted.length}頭 / ${DATA.horses.length}頭`;
+      if (sorted.length === 0) {
+        container.innerHTML = '<div class="rounded-xl border border-zinc-800 bg-zinc-900/90 p-4 text-center text-xs text-zinc-400">該当する馬がいません</div>';
+        return;
+      }
 
       let html = '';
       sorted.forEach(h => {
@@ -644,6 +666,17 @@
         });
         e.target.className = 'sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300';
         currentSort = e.target.getAttribute('data-sort');
+        renderHorses();
+      });
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.className = 'filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200';
+        });
+        e.target.className = 'filter-btn rounded-full px-2.5 py-0.5 text-[11px] font-medium bg-zinc-100/15 text-zinc-100';
+        currentFilter = e.target.getAttribute('data-filter');
         renderHorses();
       });
     });
