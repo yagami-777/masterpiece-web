@@ -148,7 +148,7 @@
         </div>
         <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
           <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">実効ΔT</div>
-          <div class="text-zinc-400 leading-relaxed">馬場差遅延秒数。良馬場基準時計と比較し、現在の馬場状態で1走あたり何秒時計が余分にかかるかを表す。</div>
+          <div class="text-zinc-400 leading-relaxed">馬場差遅延秒数。JRA公式のクッション値とゴール前含水率から換算式 ΔT = max(0, (10.0 − クッション値) × 0.40 + (ゴール前含水率 − 8.0) × 0.08) で算出し、現在の馬場状態で1走あたり何秒時計が余分にかかるかを表す。</div>
         </div>
         <div class="flex gap-2 py-1.5 border-b border-zinc-800/50 last:border-0">
           <div class="shrink-0 w-28 sm:w-36 font-semibold text-zinc-100">W<sub>sink</sub></div>
@@ -1479,6 +1479,9 @@
       const maxKelly = [...horses].sort((a,b) => b.kelly_1_4 - a.kelly_1_4)[0];
       const smPicks = horses.filter(h => h.smart_money_ratio >= 1.5 && h.ev_win > 1.0 && h.num !== maxKelly.num);
       const totalKelly = horses.reduce((acc, h) => acc + h.kelly_1_4, 0);
+      const axisNote = axis.ev_win >= 1.0
+        ? `単EV ${(axis.ev_win).toFixed(2)} と妙味も確保。配分はケリー比率（${(axis.kelly_1_4*100).toFixed(1)}%）を基準に。`
+        : `勝率首位だがEVは薄いため配分控えめ（${(axis.kelly_1_4*100).toFixed(1)}%）。複勝厚め。`;
 
       document.getElementById('portfolio-total-kelly').textContent = `合計 ${(totalKelly * 100).toFixed(1)}%`;
 
@@ -1487,14 +1490,14 @@
           <div class="text-xs font-bold text-yellow-300 flex items-center gap-1">🏆 本命軸</div>
           <div class="text-sm font-bold text-zinc-100">${axis.mark} ${axis.num} ${axis.name}</div>
           <div class="text-[11px] text-zinc-400 font-mono">単勝 ${axis.odds_win.toFixed(1)}倍 · 勝率 ${(axis.p_benter*100).toFixed(1)}%</div>
-          <div class="text-[11px] text-zinc-400">勝率首位だがEVは薄いため配分控えめ（${(axis.kelly_1_4*100).toFixed(1)}%）。複勝厚め。</div>
+          <div class="text-[11px] text-zinc-400">${axisNote}</div>
         </div>
 
         <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-3.5 space-y-1.5">
           <div class="text-xs font-bold text-emerald-300 flex items-center gap-1">📈 期待値妙味（最大ケリー）</div>
           <div class="text-sm font-bold text-zinc-100">${maxKelly.mark} ${maxKelly.num} ${maxKelly.name}</div>
           <div class="text-[11px] text-zinc-400 font-mono">単勝 ${maxKelly.odds_win.toFixed(1)}倍 · 単EV ${maxKelly.ev_win.toFixed(2)}</div>
-          <div class="text-[11px] text-zinc-400">単勝EV最大。推奨配分比率 ${(maxKelly.kelly_1_4*100).toFixed(1)}% の勝負銘柄。</div>
+          <div class="text-[11px] text-zinc-400">1/4ケリー最大の勝負銘柄。推奨配分比率 ${(maxKelly.kelly_1_4*100).toFixed(1)}%。</div>
         </div>
 
         <div class="rounded-xl border border-rose-500/30 bg-rose-500/5 p-3.5 space-y-1.5">
@@ -1502,6 +1505,7 @@
           ${smPicks.map(h => `
             <div class="text-sm font-bold text-zinc-100">${h.mark} ${h.num} ${h.name} <span class="font-mono text-xs text-rose-300">(SM ${h.smart_money_ratio.toFixed(2)})</span></div>
           `).join('')}
+          ${smPicks.length === 0 ? '<div class="text-sm text-zinc-400">該当なし</div>' : ''}
           <div class="text-[11px] text-zinc-400">大衆心理の過小評価を検知した高妙味穴馬。</div>
         </div>
       `;
