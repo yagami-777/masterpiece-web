@@ -117,7 +117,7 @@
       <div class="space-y-2.5" id="horses-list"></div>
       <p class="text-[11px] text-zinc-400 flex items-center gap-1.5 pt-1">
         <svg class="h-3.5 w-3.5 text-zinc-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        カードの数値表示はソート選択に連動します（正準勝率／物理勝率／市場勝率／3着内率／スマートマネー）。馬の行をタップするとK=7レーダーチャートと調教所見が展開します。
+        カードの数値表示はソート選択に連動します（正準勝率／物理勝率／市場勝率／3着内率／スマートマネー）。馬の行をタップするとレーダーチャートと調教所見が展開します。
       </p>
     </div>
 
@@ -378,8 +378,10 @@
       const size = 240;
       const center = size / 2;
       const radius = 80;
-      const labels = ['S_base', 'LCR', 'EOM', 'JCG', 'SCL', 'ODE', 'SM_i'];
-      const numAxes = 7;
+      // SM_i (f7) is excluded from the radar per Yamaguchi's 2026-11-01 decision:
+      // it is a market-pricing axis structurally inverse to popularity, not a horse attribute.
+      const labels = ['S_base', 'LCR', 'EOM', 'JCG', 'SCL', 'ODE'];
+      const numAxes = 6;
 
       let gridSvg = '';
       [0.2, 0.4, 0.6, 0.8, 1.0].forEach(level => {
@@ -527,7 +529,7 @@
                 </div>
                 <div class="mt-2.5 flex items-center justify-between pt-1.5 border-t border-zinc-800/80 text-[11px]">
                   <span class="inline-flex items-center gap-1 font-semibold ${isExp ? 'text-emerald-400' : 'text-zinc-400'}">
-                    ${isExp ? '▲ K=7レーダー・生体所見（タップで閉じる）' : '▼ タップしてK=7レーダー・短評を展開'}
+                    ${isExp ? '▲ レーダー・生体所見（タップで閉じる）' : '▼ タップしてレーダー・短評を展開'}
                   </span>
                   <span class="rounded px-2 py-0.5 text-[10px] font-bold ${isExp ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-zinc-800 text-zinc-300'}">
                     ${isExp ? '閉じる ▲' : 'チャート展開 ▼'}
@@ -546,8 +548,9 @@
                 <!-- Radar & Specs Grid -->
                 <div class="grid sm:grid-cols-2 gap-4 items-center">
                   <div>
-                    <div class="text-[11px] font-bold text-zinc-400 mb-1 text-center">K=7 直交基底レーダー</div>
+                    <div class="text-[11px] font-bold text-zinc-400 mb-1 text-center">直交基底レーダー（f1–f6）</div>
                     ${generateRadarSvg(h.f_raw)}
+                    <div class="text-[10px] text-zinc-500 text-center">SM_i は市場の値付けを測る軸のため、レーダーには含めない</div>
                   </div>
                   <div class="space-y-2.5">
                     <div class="text-xs text-zinc-300 leading-relaxed bg-zinc-900/80 p-2.5 rounded border border-zinc-800">
