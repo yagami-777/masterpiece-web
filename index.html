@@ -94,8 +94,7 @@
           <span class="font-mono text-xs text-zinc-400" id="horse-count-badge"></span>
         </h2>
         <div class="flex gap-1 rounded-lg border border-zinc-800 bg-zinc-900 p-1" id="sort-buttons">
-          <button data-sort="pred" class="sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300">予測順位</button>
-          <button data-sort="pwin" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">正準勝率</button>
+          <button data-sort="pwin" class="sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300">正準勝率</button>
           <button data-sort="pfp" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">物理勝率</button>
           <button data-sort="pmkt" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">市場勝率</button>
           <button data-sort="odds" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">単勝オッズ</button>
@@ -287,7 +286,7 @@
       "−": "text-zinc-400 border-zinc-700 bg-zinc-800/20"
     };
 
-    let currentSort = "pred";
+    let currentSort = "pwin";
     let expandedNum = null; // 初期展開は予想1位（◎）に追随する
     let expandedTouched = false;
 
@@ -424,8 +423,7 @@
       const container = document.getElementById('horses-list');
       let sorted = [...DATA.horses];
 
-      if (currentSort === 'pred') sorted.sort((a,b) => a.pred_rank - b.pred_rank);
-      else if (currentSort === 'pwin') sorted.sort((a,b) => b.p_benter - a.p_benter);
+      if (currentSort === 'pwin') sorted.sort((a,b) => b.p_benter - a.p_benter);
       else if (currentSort === 'pfp') sorted.sort((a,b) => (b.p_fp ?? b.p_benter) - (a.p_fp ?? a.p_benter));
       else if (currentSort === 'pmkt') sorted.sort((a,b) => (b.p_mkt ?? b.p_benter) - (a.p_mkt ?? a.p_benter));
       else if (currentSort === 'odds') sorted.sort((a,b) => a.odds_win - b.odds_win);
