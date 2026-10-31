@@ -1238,7 +1238,25 @@
     };
 
     let currentSort = "pred";
-    let expandedNum = 8; // デフォルトで本命◎ブライトスクリプトを展開
+    let expandedNum = null; // 初期展開は予想1位（◎）に追随する
+    let expandedTouched = false;
+
+    // データ出自（馬体観察の反映状況）: レースIDごとに、観察ソース別の馬番を定義する
+    const PROVENANCE_BY_RACE = {
+      "20261101_TOKYO_11R_TENNO_SHO_AUTUMN_G1": {
+        focus_daily: [1, 2, 3, 6, 7, 9, 12, 13, 14, 15, 16, 17],
+        focus_only: [4, 11],
+        none: [5, 8, 10]
+      }
+    };
+    function provenanceLabel(h) {
+      const p = PROVENANCE_BY_RACE[(DATA.race_info || {}).race_id];
+      if (!p) return null;
+      if (p.focus_daily.includes(h.num)) return "観察反映：競馬ラボFOCUS（デイリー写真でも照合）";
+      if (p.focus_only.includes(h.num)) return "観察反映：競馬ラボFOCUS";
+      if (p.none.includes(h.num)) return "観察なし：公式測尺推計ベース";
+      return null;
+    }
 
     function renderHeader() {
       const info = DATA.race_info;
@@ -1461,6 +1479,11 @@
                         <span class="text-zinc-400 text-[10px]">90%信頼区間</span><br/>
                         [${(h.ci_90[0]*100).toFixed(1)}%, ${(h.ci_90[1]*100).toFixed(1)}%]
                       </div>
+                      ${provenanceLabel(h) ? `
+                      <div class="bg-zinc-900 p-2 rounded col-span-2">
+                        <span class="text-zinc-400 text-[10px]">データ出自</span><br/>
+                        <span class="text-[11px] font-sans">${provenanceLabel(h)}</span>
+                      </div>` : ''}
                     </div>
                   </div>
                 </div>
@@ -1530,6 +1553,7 @@
     }
 
     function toggleExpand(num) {
+      expandedTouched = true;
       expandedNum = (expandedNum === num) ? null : num;
       renderHorses();
     }
@@ -1563,6 +1587,10 @@
         }
       } catch (err) {
         console.warn('race_data.json fetch failed, using fallback data:', err);
+      }
+      if (!expandedTouched && expandedNum === null && DATA.horses && DATA.horses.length) {
+        const top = DATA.horses.find(h => h.pred_rank === 1) || DATA.horses[0];
+        if (top) expandedNum = top.num;
       }
       renderHeader();
       renderHorses();
