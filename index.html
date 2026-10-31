@@ -96,6 +96,8 @@
         <div class="flex gap-1 rounded-lg border border-zinc-800 bg-zinc-900 p-1" id="sort-buttons">
           <button data-sort="pred" class="sort-btn rounded px-2.5 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300">予測順位</button>
           <button data-sort="pwin" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">正準勝率</button>
+          <button data-sort="pfp" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">物理勝率</button>
+          <button data-sort="pmkt" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">市場勝率</button>
           <button data-sort="odds" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">単勝オッズ</button>
           <button data-sort="kelly" class="sort-btn rounded px-2.5 py-1 text-xs font-medium text-zinc-400 hover:text-zinc-200">1/4ケリー</button>
         </div>
@@ -105,7 +107,7 @@
       <div class="space-y-2.5" id="horses-list"></div>
       <p class="text-[11px] text-zinc-400 flex items-center gap-1.5 pt-1">
         <svg class="h-3.5 w-3.5 text-zinc-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        P_win は正準勝率（p_benter）。馬の行をタップするとK=7レーダーチャートと調教所見が展開します。
+        カードの勝率表示はソート選択に連動します（正準＝p_benter／物理＝p_fp／市場＝p_mkt）。馬の行をタップするとK=7レーダーチャートと調教所見が展開します。
       </p>
     </div>
 
@@ -424,8 +426,16 @@
 
       if (currentSort === 'pred') sorted.sort((a,b) => a.pred_rank - b.pred_rank);
       else if (currentSort === 'pwin') sorted.sort((a,b) => b.p_benter - a.p_benter);
+      else if (currentSort === 'pfp') sorted.sort((a,b) => (b.p_fp ?? b.p_benter) - (a.p_fp ?? a.p_benter));
+      else if (currentSort === 'pmkt') sorted.sort((a,b) => (b.p_mkt ?? b.p_benter) - (a.p_mkt ?? a.p_benter));
       else if (currentSort === 'odds') sorted.sort((a,b) => a.odds_win - b.odds_win);
       else if (currentSort === 'kelly') sorted.sort((a,b) => (b.kelly_1_4 - a.kelly_1_4) || (b.ev_win - a.ev_win));
+
+      const dispMeta = currentSort === 'pfp'
+        ? { key: 'p_fp', label: '物理勝率', cls: 'text-sky-400' }
+        : currentSort === 'pmkt'
+          ? { key: 'p_mkt', label: '市場勝率', cls: 'text-amber-400' }
+          : { key: 'p_benter', label: '正準勝率', cls: 'text-emerald-400' };
 
       let html = '';
       sorted.forEach(h => {
@@ -449,7 +459,8 @@
                   <div class="text-[11px] text-zinc-400 truncate">${h.jockey} · ${h.trainer}</div>
                 </div>
                 <div class="text-right">
-                  <div class="font-mono text-sm sm:text-base font-bold text-emerald-400">${(h.p_benter * 100).toFixed(1)}%</div>
+                  <div class="text-[9px] text-zinc-500 font-mono">${dispMeta.label}</div>
+                  <div class="font-mono text-sm sm:text-base font-bold ${dispMeta.cls}">${(((h[dispMeta.key] ?? h.p_benter)) * 100).toFixed(1)}%</div>
                   <div class="text-[10px] text-zinc-400 font-mono">単 ${h.odds_win.toFixed(1)}倍</div>
                 </div>
               </div>
@@ -457,7 +468,7 @@
               <!-- Bar & Key stats row -->
               <div class="mt-2.5">
                 <div class="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
-                  <div class="h-full bg-emerald-500 rounded-full" style="width: ${Math.min(100, h.p_benter * 100 * 2.5)}%"></div>
+                  <div class="h-full bg-emerald-500 rounded-full" style="width: ${Math.min(100, (h[dispMeta.key] ?? h.p_benter) * 100 * 2.5)}%"></div>
                 </div>
                 <div class="grid grid-cols-5 gap-1 pt-2 font-mono text-center text-[10px]">
                   <div class="rounded bg-zinc-950/50 py-1">
