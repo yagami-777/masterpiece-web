@@ -384,9 +384,14 @@
       // its value is exactly 1 - 0.05 * previous-race delta_d (a measured past-race
       // track loss, verified for all 17 horses), not this race's course geometry,
       // and the raw delta_d is already shown per horse as a stat.
-      const labels = ['S_base', 'LCR', 'EOM', 'SCL', 'ODE'];
-      const axisIdx = [0, 1, 2, 4, 5];
-      const numAxes = 5;
+      // SCL (f5) is also excluded per Yamaguchi's 2026-11-01 decision:
+      // f_raw[4] is scl[0] only (the Struggle component, verified for all 17
+      // horses), while SCL is a 3-component balance [S, C, L], not a magnitude;
+      // C/L-dominant horses were penalised on this axis regardless of their
+      // overall motivational strength. The SCL type text remains shown per horse.
+      const labels = ['S_base', 'LCR', 'EOM', 'ODE'];
+      const axisIdx = [0, 1, 2, 5];
+      const numAxes = 4;
 
       let gridSvg = '';
       [0.2, 0.4, 0.6, 0.8, 1.0].forEach(level => {
@@ -553,9 +558,9 @@
                 <!-- Radar & Specs Grid -->
                 <div class="grid sm:grid-cols-2 gap-4 items-center">
                   <div>
-                    <div class="text-[11px] font-bold text-zinc-400 mb-1 text-center">直交基底レーダー（5軸）</div>
+                    <div class="text-[11px] font-bold text-zinc-400 mb-1 text-center">直交基底レーダー（4軸）</div>
                     ${generateRadarSvg(h.f_raw)}
-                    <div class="text-[10px] text-zinc-500 text-center">SM_i は市場の値付けを測る軸のため、レーダーには含めない<br>JCG は前走Δdの換算値のため、レーダーには含めない</div>
+                    <div class="text-[10px] text-zinc-500 text-center">SM_i は市場の値付けを測る軸のため、レーダーには含めない<br>JCG は前走Δdの換算値のため、レーダーには含めない<br>SCL は3成分のバランスのため、レーダーには含めない（動機タイプは各馬のSCL動機に表示）</div>
                   </div>
                   <div class="space-y-2.5">
                     <div class="text-xs text-zinc-300 leading-relaxed bg-zinc-900/80 p-2.5 rounded border border-zinc-800">
