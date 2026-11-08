@@ -1774,6 +1774,10 @@
   "Basis_6: gamma_b (生体負債・疲労回復整合性)",
   "Basis_7: SMR (スマートマネー単複非対称比率)"
  ],
+ "meta": {
+  "track_stage": "final",
+  "updated_at": "2026-11-08"
+ },
  "race_info": {
   "course": "東京芝2500m（左・Bコース）",
   "cushion_value": 9.4,
@@ -1794,16 +1798,12 @@
   "utc": "2026-11-07T11:20:49.914Z"
  },
  "track_rheology": {
+  "condition": "良",
   "cushion_value": 9.4,
+  "effective_track_delta_t_sec": 0.704,
   "tactical_conclusion": "東京芝2500mは高低差2.1mのダンダン坂を2回通過。クッション値9.4の良馬場で負荷率L_Rと走法Mode-B受動弾性リコイルの共鳴度が勝敗を分ける。",
   "track_condition_turf": "良",
-  "turf_moisture_4c_pct": 9.5,
-  "turf_moisture_goal_pct": 9.2,
-  "effective_track_delta_t_sec": 0.336,
-  "condition": "良"
- },
- "meta": {
-  "updated_at": "2026-11-07",
-  "track_stage": "preliminary"
+  "turf_moisture_4c_pct": 12.1,
+  "turf_moisture_goal_pct": 13.8
  }
 }
